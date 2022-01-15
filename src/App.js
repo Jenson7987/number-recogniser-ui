@@ -5,11 +5,11 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <div style={{ width: "500px", height: "500px", border: "1px solid #000" }}>
+        <div style={{ width: "300px", height: "400px", border: "1px solid #000" }}>
           <SignatureCanvas
             canvasProps={{
-              width: 500, 
-              height: 500, 
+              width: 300, 
+              height: 400, 
               className: "sigCanvas"
             }}
           />
