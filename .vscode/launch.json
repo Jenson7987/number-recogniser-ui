@@ -7,9 +7,12 @@
         {
             "type": "pwa-chrome",
             "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "url": "http://localhost:3000",
-            "webRoot": "${workspaceFolder}"
+            "name": "Debug App",
+            "url": "http://127.0.0.1:3000",
+            "webRoot": "${workspaceFolder}",
+            "env": {
+                "REACT_APP_NUMBER_RECOGNISER_SERVICE_URL": "http://127.0.0.1:5000/recognise-number"
+            }
         }
     ]
 }

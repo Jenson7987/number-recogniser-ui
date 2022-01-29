@@ -1,4 +1,5 @@
 import './App.css';
+import { useState, useEffect } from 'react'
 import SignatureCanvas from 'react-signature-canvas'
 import {
   BarChart,
@@ -7,85 +8,88 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend
+  Legend,
+  LabelList
 } from "recharts";
+import axios from 'axios'
+import runtimeEnv from '@mars/heroku-js-runtime-env';
 
-const data = [
-  {
-    name: "0",
-    Confidence: 0,
-    amt: 400
-  },
-  {
-    name: "1",
-    Confidence: 0,
-    amt: 2210
-  },
-  {
-    name: "2",
-    Confidence: 0,
-    amt: 2290
-  },
-  {
-    name: "3",
-    Confidence: 0,
-    amt: 2000
-  },
-  {
-    name: "4",
-    Confidence: 0,
-    amt: 2181
-  },
-  {
-    name: "5",
-    Confidence: 0,
-    amt: 2500
-  },
-  {
-    name: "6",
-    Confidence: 0,
-    amt: 2100
-  },
-  {
-    name: "7",
-    Confidence: 0,
-    amt: 2100
-  },
-  {
-    name: "8",
-    Confidence: 0,
-    amt: 2100
-  },
-  {
-    name: "9",
-    Confidence: 0,
-    amt: 2100
-  }
-];
 
 function App() {
+  let [data, setData] = useState([]);
+
+  useEffect(() => {
+    submitImage();
+  }, []);
+
   let sigPadRef;
 
   function clearPad() {
     sigPadRef.clear()
   }
 
+  function submitImage() {
+    var dataURL = sigPadRef.toDataURL()
+    if (!sigPadRef.isEmpty()) {
+      const env = runtimeEnv();
+      axios.post(
+        env.REACT_APP_NUMBER_RECOGNISER_SERVICE_URL,
+        { image: dataURL }
+      )
+        .then(response => {
+          console.log("Response = " + JSON.stringify(response.data));
+          setData([
+            { name: "0", confidence: response.data["0"] },
+            { name: "1", confidence: response.data["1"] },
+            { name: "2", confidence: response.data["2"] },
+            { name: "3", confidence: response.data["3"] },
+            { name: "4", confidence: response.data["4"] },
+            { name: "5", confidence: response.data["5"] },
+            { name: "6", confidence: response.data["6"] },
+            { name: "7", confidence: response.data["7"] },
+            { name: "8", confidence: response.data["8"] },
+            { name: "9", confidence: response.data["9"] },
+          ])
+        })
+        .catch(error => {
+          console.log("Error = " + error);
+        })
+    } else {
+      setData([
+        { name: "0", confidence: 0 },
+        { name: "1", confidence: 0 },
+        { name: "2", confidence: 0 },
+        { name: "3", confidence: 0 },
+        { name: "4", confidence: 0 },
+        { name: "5", confidence: 0 },
+        { name: "6", confidence: 0 },
+        { name: "7", confidence: 0 },
+        { name: "8", confidence: 0 },
+        { name: "9", confidence: 0 },
+      ])
+    }
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <div style={{ width: "300px", height: "400px", border: "1px solid #000" }}>
+        <div style={{ width: "280px", height: "280px", border: "1px solid #000" }}>
           <SignatureCanvas
             ref={ref => (sigPadRef = ref)}
             canvasProps={{
-              width: 300,
-              height: 400,
-              className: "sigCanvas"
+              width: 280,
+              height: 280,
+              className: "sigCanvas",
             }}
+            backgroundColor="rgb(255, 255, 255)"
+            minWidth={12}
+            maxWidth={12}
+            velocityFilterWeight={0}
           />
         </div>
         <p align="left">
           <input type="button" value="Clear" onClick={clearPad}/>
-          <input type="button" value="Submit" />
+          <input type="button" value="Submit" onClick={submitImage}/>
         </p>
 
         <BarChart
@@ -101,10 +105,15 @@ function App() {
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
-          <YAxis />
+          <YAxis 
+            ticks={[20, 40, 60, 80, 100]}  
+            domain={[0, 100]}  
+          />
           <Tooltip />
-          <Legend />
-          <Bar dataKey="Confidence" fill="#8884d8" />
+          <Legend wrapperStyle={{bottom: -30, left: 50}} />
+          <Bar dataKey="confidence" fill="#8884d8">
+            <LabelList dataKey="confidence" position="top" />
+          </Bar>
         </BarChart>
       </header>
     </div>
