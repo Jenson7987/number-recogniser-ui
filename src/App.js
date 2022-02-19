@@ -26,6 +26,18 @@ function App() {
 
   function clearPad() {
     sigPadRef.clear()
+    setData([
+      { name: "0", confidence: 0 },
+      { name: "1", confidence: 0 },
+      { name: "2", confidence: 0 },
+      { name: "3", confidence: 0 },
+      { name: "4", confidence: 0 },
+      { name: "5", confidence: 0 },
+      { name: "6", confidence: 0 },
+      { name: "7", confidence: 0 },
+      { name: "8", confidence: 0 },
+      { name: "9", confidence: 0 },
+    ])
   }
 
   function submitImage() {
