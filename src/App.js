@@ -85,48 +85,53 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <div style={{ width: "280px", height: "280px", border: "1px solid #000" }}>
-          <SignatureCanvas
-            ref={ref => (sigPadRef = ref)}
-            canvasProps={{
-              width: 280,
-              height: 280,
-              className: "sigCanvas",
-            }}
-            backgroundColor="rgb(255, 255, 255)"
-            minWidth={12}
-            maxWidth={12}
-            velocityFilterWeight={0}
-          />
+        <h1>Number Recogniser</h1>
+        <h4>By Jenson Wong</h4>
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+          <div style={{border: "1px solid #000"}}>
+            <SignatureCanvas
+              ref={ref => (sigPadRef = ref)}
+              canvasProps={{
+                width: 280,
+                height: 280,
+                className: "sigCanvas",
+              }}
+              backgroundColor="rgb(255, 255, 255)"
+              minWidth={12}
+              velocityFilterWeight={0}
+            />
+          </div>
         </div>
-        <p align="left">
+        <p align="centre">
           <input type="button" value="Clear" onClick={clearPad}/>
           <input type="button" value="Submit" onClick={submitImage}/>
         </p>
-
-        <BarChart
-          width={500}
-          height={300}
-          data={data}
-          margin={{
-            top: 25,
-            right: 30,
-            left: 20,
-            bottom: 5
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis 
-            ticks={[20, 40, 60, 80, 100]}  
-            domain={[0, 100]}  
-          />
-          <Tooltip />
-          <Legend wrapperStyle={{bottom: -30, left: 50}} />
-          <Bar dataKey="confidence" fill="#8884d8">
-            <LabelList dataKey="confidence" position="top" />
-          </Bar>
-        </BarChart>
+        
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+          <BarChart
+            width={500}
+            height={300}
+            data={data}
+            margin={{
+              top: 25,
+              right: 30,
+              left: 20,
+              bottom: 5
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis 
+              ticks={[20, 40, 60, 80, 100]}  
+              domain={[0, 100]}  
+            />
+            <Tooltip />
+            <Legend wrapperStyle={{bottom: -30, left: 50}} />
+            <Bar dataKey="confidence" fill="#8884d8">
+              <LabelList dataKey="confidence" position="top" />
+            </Bar>
+          </BarChart>
+        </div>
       </header>
     </div>
   );
