@@ -17,6 +17,7 @@
     "react-scripts": "^5.0.0",
     "react-signature-canvas": "^1.0.3",
     "recharts": "^2.1.8",
+    "serve": "^14.2.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
