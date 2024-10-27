@@ -1,9 +1,6 @@
 {
   "name": "number-recogniser-ui",
   "version": "0.1.0",
-  "engines": {
-    "node": "16.13.1"
-  },
   "private": true,
   "main": "index.js",
   "dependencies": {
@@ -17,15 +14,13 @@
     "react-scripts": "^5.0.0",
     "react-signature-canvas": "^1.0.3",
     "recharts": "^2.1.8",
-    "serve": "^14.2.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "serve -s build",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "heroku-postbuild": "npm run build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
